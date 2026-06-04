@@ -1,0 +1,8 @@
+{
+  "items": [
+    { "valeur": "1/5", "label": "des adultes en France rapporte avoir subi des violences psychologiques dans l'enfance", "source": "INSERM / Santé publique France" },
+    { "valeur": "80 %", "label": "des maltraitances infantiles sont d'ordre psychologique ou émotionnel", "source": "Fondation pour l'enfance" },
+    { "valeur": "3×", "label": "plus de risque de développer un trouble anxieux ou dépressif à l'âge adulte", "source": "INSERM, méta-analyse 2021" },
+    { "valeur": "60 %", "label": "des victimes n'ont jamais parlé de leur vécu à un·e professionnel·le", "source": "HAS / Enquête nationale" }
+  ]
+}

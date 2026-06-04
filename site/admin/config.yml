@@ -1,0 +1,108 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "static/images"
+public_folder: "/static/images"
+
+locale: fr
+
+collections:
+
+  # ── ARTICLES DU BLOG ──
+  - name: "articles"
+    label: "📝 Articles du blog"
+    folder: "content/articles"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Titre", name: "title", widget: "string" }
+      - { label: "Date de publication", name: "date", widget: "datetime", format: "YYYY-MM-DD" }
+      - label: "Catégorie"
+        name: "categorie"
+        widget: "select"
+        options: ["Sensibilisation", "Ressources", "Témoignage", "Recherche", "Actualités"]
+      - { label: "Émoji de couverture", name: "emoji", widget: "string", default: "💬", hint: "Un seul emoji ex: 💬 🌱 🧠 📖" }
+      - { label: "Extrait (2-3 phrases)", name: "extrait", widget: "text", hint: "Résumé affiché sur la carte de l'article" }
+      - { label: "Contenu complet", name: "body", widget: "markdown" }
+      - { label: "Publié", name: "publie", widget: "boolean", default: true }
+
+  # ── PARAMÈTRES DU SITE ──
+  - name: "settings"
+    label: "⚙️ Paramètres du site"
+    files:
+
+      - name: "general"
+        label: "🏠 Général"
+        file: "content/settings/general.json"
+        fields:
+          - { label: "Nom de l'association", name: "nom", widget: "string" }
+          - { label: "Slogan / accroche hero", name: "slogan", widget: "text" }
+          - { label: "Description courte (hero)", name: "description_hero", widget: "text" }
+          - label: "Logo principal"
+            name: "logo"
+            widget: "image"
+            hint: "Format PNG ou SVG recommandé, fond transparent"
+          - { label: "Email de contact", name: "email", widget: "string" }
+          - { label: "Ville", name: "ville", widget: "string" }
+          - { label: "Délai de réponse", name: "delai_reponse", widget: "string", default: "Réponse sous une semaine" }
+
+      - name: "valeurs"
+        label: "💜 Valeurs (section Qui sommes-nous)"
+        file: "content/settings/valeurs.json"
+        fields:
+          - label: "Texte d'introduction"
+            name: "intro"
+            widget: "list"
+            fields:
+              - { label: "Paragraphe", name: "texte", widget: "text" }
+          - label: "Valeurs"
+            name: "items"
+            widget: "list"
+            fields:
+              - { label: "Emoji", name: "emoji", widget: "string" }
+              - { label: "Titre", name: "titre", widget: "string" }
+              - { label: "Description", name: "description", widget: "text" }
+
+      - name: "actions"
+        label: "🎯 Champs d'action"
+        file: "content/settings/actions.json"
+        fields:
+          - label: "Actions"
+            name: "items"
+            widget: "list"
+            fields:
+              - { label: "Titre", name: "titre", widget: "string" }
+              - { label: "Description", name: "description", widget: "text" }
+
+      - name: "chiffres"
+        label: "📊 Chiffres clés"
+        file: "content/settings/chiffres.json"
+        fields:
+          - label: "Chiffres"
+            name: "items"
+            widget: "list"
+            fields:
+              - { label: "Chiffre / valeur", name: "valeur", widget: "string", hint: "Ex: 1/5 ou 80% ou 3×" }
+              - { label: "Label explicatif", name: "label", widget: "text" }
+              - { label: "Source", name: "source", widget: "string" }
+
+      - name: "equipe"
+        label: "👥 Équipe"
+        file: "content/settings/equipe.json"
+        fields:
+          - { label: "Titre de section", name: "titre", widget: "string" }
+          - { label: "Introduction", name: "intro", widget: "text" }
+          - label: "Membres"
+            name: "membres"
+            widget: "list"
+            fields:
+              - { label: "Prénom", name: "prenom", widget: "string" }
+              - { label: "Rôle", name: "role", widget: "string" }
+              - label: "Photo"
+                name: "photo"
+                widget: "image"
+                required: false
+                hint: "Optionnel — format carré recommandé"
+              - { label: "Couleur avatar (si pas de photo)", name: "couleur", widget: "select", options: ["violet", "lavande", "peche", "dore"], default: "lavande" }
+              - { label: "Bio", name: "bio", widget: "text" }

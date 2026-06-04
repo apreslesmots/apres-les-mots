@@ -1,0 +1,16 @@
+{
+  "items": [
+    {
+      "titre": "Groupes de parole",
+      "description": "Des espaces d'échange collectifs encadrés par des psychologues, permettant aux participant·es de partager leur vécu, de se sentir compris·es et de cheminer ensemble vers la reconstruction."
+    },
+    {
+      "titre": "Sensibilisation & formation",
+      "description": "Interventions auprès du grand public, des établissements scolaires et des professionnel·les de santé, du soin et du travail social — pour reconnaître, nommer et mieux accompagner les violences psychologiques intrafamiliales."
+    },
+    {
+      "titre": "Ressources & information",
+      "description": "Mise à disposition de contenus accessibles sur les mécanismes des violences verbales dans l'enfance, leurs conséquences et les voies de reconstruction possibles."
+    }
+  ]
+}

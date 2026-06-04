@@ -1,0 +1,27 @@
+{
+  "titre": "Un collectif qui avance ensemble",
+  "intro": "Chez Après les mots, chaque rôle compte autant que les autres. Nous croyons que c'est la diversité de nos sensibilités et de nos engagements qui donne sa force au projet — et que les personnes concernées en sont partie intégrante.",
+  "membres": [
+    {
+      "prenom": "Laure",
+      "role": "Présidente & fondatrice",
+      "photo": "",
+      "couleur": "violet",
+      "bio": "Psychologue clinicienne spécialisée en psychotraumatologie, j'ai exercé en victimologie auprès de personnes ayant vécu des violences intrafamiliales. C'est de cette expérience, et d'une conviction profonde que ces violences méritent d'être nommées, qu'est née Après les mots."
+    },
+    {
+      "prenom": "Roxane",
+      "role": "Secrétaire",
+      "photo": "",
+      "couleur": "lavande",
+      "bio": "Passionnée de sciences humaines, d'écologie, d'animaux et de musique, je m'engage dans de nombreux secteurs associatifs. J'ai hâte d'apporter mon énergie, ma sensibilité et mon attachement à cette cause qui me tient à cœur."
+    },
+    {
+      "prenom": "Pauline",
+      "role": "Trésorière",
+      "photo": "",
+      "couleur": "peche",
+      "bio": "Curieuse et sociable, j'aime créer du lien et faire vivre les projets collectifs. Je mets mes compétences et mon enthousiasme au service de l'association pour contribuer à lui donner du sens — et du souffle."
+    }
+  ]
+}

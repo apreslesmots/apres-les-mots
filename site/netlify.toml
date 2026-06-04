@@ -1,0 +1,8 @@
+[build]
+  publish = "."
+
+[[plugins]]
+  package = "@netlify/plugin-sitemap"
+
+[template.environment]
+  description = "Site Après les mots"

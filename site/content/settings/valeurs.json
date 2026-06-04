@@ -1,0 +1,29 @@
+{
+  "intro": [
+    { "texte": "Après les mots est une association spécialisée dans la sensibilisation et l'accompagnement des personnes ayant subi des violences intra-familiales psychologiques et verbales durant l'enfance." },
+    { "texte": "Ces violences, souvent invisibles et minimisées, laissent des traces profondes et durables. Notre mission est de briser le silence qui les entoure, d'informer le grand public et les professionnel·les, et d'offrir un espace sûr pour celles et ceux qui en ont besoin." },
+    { "texte": "Nous organisons des groupes de parole encadrés par des professionnel·les du soin psychologique, dans un cadre bienveillant, confidentiel et sans jugement." }
+  ],
+  "items": [
+    {
+      "emoji": "🤝",
+      "titre": "Bienveillance & inclusion",
+      "description": "Un espace sécurisé, sans jugement, où chaque parole est accueillie avec respect. Nous adoptons une vision de la violence comme intersectionnelle : nous prenons en compte toutes les individualités et aucune forme de discrimination n'est admise — racisme, LGBTQphobies, grossophobie, validisme, et toutes les autres."
+    },
+    {
+      "emoji": "🔬",
+      "titre": "Expertise & rigueur",
+      "description": "Nos accompagnements s'appuient sur la psychotraumatologie, la victimologie, le développement de l'enfant, la psychopathologie, la sociologie — et sur l'expérience des personnes concernées elles-mêmes."
+    },
+    {
+      "emoji": "📢",
+      "titre": "Sensibilisation",
+      "description": "Nous travaillons à rendre visibles des violences trop longtemps ignorées ou banalisées, auprès du grand public comme des professionnel·les."
+    },
+    {
+      "emoji": "🌱",
+      "titre": "Empowerment",
+      "description": "Redonner aux personnes les outils pour comprendre, nommer et dépasser ce qu'elles ont vécu — à leur propre rythme, sans injonction."
+    }
+  ]
+}
