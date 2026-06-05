@@ -538,7 +538,7 @@ footer{background:#1a1625;padding:2.5rem 4rem;display:flex;align-items:center;ju
       <p>Articles, réflexions et ressources pour mieux comprendre les violences psychologiques intrafamiliales dans l'enfance.</p>
     </div>
     <div class="blog-controls">
-      <button class="btn-add-article" onclick="openModal()">+ Nouvel article</button>
+      <button class="btn-add-article" id="btnNouvelArticle" onclick="demanderMDP()" style="display:none">+ Nouvel article</button>
     </div>
     <div class="blog-grid" id="blogGrid"></div>
   </div>
@@ -652,8 +652,8 @@ const defaultArticles=(function(){
   }catch(e){}
   return [];
 })();
-function getArticles(){const s=localStorage.getItem(BLOG_KEY);return s?JSON.parse(s):defaultArticles;}
-function storeArticles(arr){localStorage.setItem(BLOG_KEY,JSON.stringify(arr));}
+function getArticles(){return defaultArticles;}
+function storeArticles(arr){/* articles gérés en code */}
 function fmtDate(d){return new Date(d).toLocaleDateString('fr-FR',{day:'numeric',month:'long',year:'numeric'});}
 
 function renderBlog(){
@@ -661,7 +661,7 @@ function renderBlog(){
   getArticles().forEach(a=>{
     const card=document.createElement('div');card.className='article-card';
     card.innerHTML=`
-      <div class="article-edit-btns${editOn?' show':''}">
+      <div class="article-edit-btns">
         <button class="art-btn art-btn-edit" onclick="openModal(${a.id})" title="Modifier">✎</button>
         <button class="art-btn art-btn-del" onclick="deleteArticle(${a.id})" title="Supprimer">✕</button>
       </div>
@@ -716,7 +716,27 @@ function deleteArticle(id){
   storeArticles(getArticles().filter(a=>a.id!==id));renderBlog();toast('Article supprimé.');
 }
 
-document.addEventListener('DOMContentLoaded',()=>{renderBlog();});
+document.addEventListener('DOMContentLoaded',()=>{
+  // Vider le cache localStorage des articles pour forcer les articles du code
+  localStorage.removeItem('alm_articles');
+  renderBlog();
+  // Ajouter le raccourci admin (triple-clic sur le titre du blog)
+  const blogH = document.querySelector('#page-blog h1');
+  if(blogH){
+    let clicks=0;
+    blogH.addEventListener('click',()=>{
+      clicks++;
+      setTimeout(()=>{clicks=0;},600);
+      if(clicks>=3){
+        const pwd=prompt('Mot de passe :');
+        if(pwd==='AprèsLesMots2025!'){
+          document.getElementById('btnNouvelArticle').style.display='flex';
+          alert('Mode administrateur activé.');
+        }
+      }
+    });
+  }
+});
 </script>
 
 
