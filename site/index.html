@@ -145,7 +145,16 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1.2rem 4rem;display:
 .article-full-cat{font-size:.72rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--peche);margin-bottom:.75rem}
 .article-full-titre{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,5vw,3.5rem);font-weight:300;color:var(--texte);margin-bottom:.75rem;line-height:1.15}
 .article-full-date{font-size:.82rem;color:rgba(90,82,112,.5);margin-bottom:2.5rem;padding-bottom:2rem;border-bottom:1px solid rgba(155,142,196,.15)}
-.article-full-body{font-size:1.05rem;line-height:1.9;color:var(--texte-doux);font-weight:300;white-space:pre-wrap}
+.article-full-body{font-size:1.05rem;line-height:1.9;color:var(--texte-doux);font-weight:300}
+.article-full-body h1{font-family:'Cormorant Garamond',serif;font-size:clamp(1.8rem,3vw,2.4rem);font-weight:300;color:var(--texte);margin:2rem 0 1rem;line-height:1.2}
+.article-full-body h2{font-family:'Cormorant Garamond',serif;font-size:clamp(1.4rem,2.5vw,1.9rem);font-weight:400;color:var(--texte);margin:2rem 0 .75rem;line-height:1.3}
+.article-full-body h3{font-family:'Cormorant Garamond',serif;font-size:1.25rem;font-weight:600;color:var(--texte);margin:1.5rem 0 .5rem}
+.article-full-body p{margin-bottom:1.25rem}
+.article-full-body strong{font-weight:600;color:var(--texte)}
+.article-full-body em{font-style:italic;color:var(--texte-doux)}
+.article-full-body blockquote{border-left:3px solid var(--lavande);padding:.75rem 1.25rem;margin:1.5rem 0;background:var(--creme-fonce);border-radius:0 8px 8px 0;font-style:italic;color:var(--texte-doux)}
+.article-full-body hr{border:none;border-top:1px solid rgba(155,142,196,.2);margin:2rem 0}
+.article-full-body a{color:var(--violet-doux);text-decoration:underline}
 .contact-section{background:var(--texte);padding:6rem 4rem;position:relative;overflow:hidden}
 .contact-section::before{content:'';position:absolute;bottom:-20%;left:-5%;width:400px;height:400px;border-radius:50%;background:radial-gradient(circle,rgba(232,149,109,.08) 0%,transparent 70%)}
 .contact-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:start;position:relative}
@@ -644,6 +653,34 @@ function drawFil(){
 window.addEventListener('load',()=>setTimeout(drawFil,300));
 window.addEventListener('resize',drawFil);
 
+
+function mdToHtml(md) {
+  if (!md) return '';
+  let html = md
+    // Titres
+    .replace(/^### (.+)$/gm, '<h3>$1</h3>')
+    .replace(/^## (.+)$/gm, '<h2>$1</h2>')
+    .replace(/^# (.+)$/gm, '<h1>$1</h1>')
+    // Gras + italique
+    .replace(/\*\*\*(.+?)\*\*\*/g, '<strong><em>$1</em></strong>')
+    // Gras
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+    // Italique
+    .replace(/\*(.+?)\*/g, '<em>$1</em>')
+    // Citation blockquote
+    .replace(/^> (.+)$/gm, '<blockquote>$1</blockquote>')
+    // Séparateur
+    .replace(/^---$/gm, '<hr>')
+    // Paragraphes : double saut de ligne
+    .split(/\n{2,}/).map(p => {
+      p = p.trim();
+      if (!p) return '';
+      if (p.match(/^<(h[1-3]|blockquote|hr)/)) return p;
+      return '<p>' + p.replace(/\n/g, '<br>') + '</p>';
+    }).join('\n');
+  return html;
+}
+
 const BLOG_KEY='alm_articles';
 let defaultArticles=[];
 function getArticles(){return defaultArticles;}
@@ -663,7 +700,7 @@ function renderBlog(){
       <div class="article-body">
         <div class="article-cat">${a.cat}</div>
         <div class="article-titre">${a.titre}</div>
-        <div class="article-extrait">${a.extrait}</div>
+        <div class="article-extrait">${a.extrait.replace(/[#*>]/g,'').trim()}</div>
         <div class="article-footer">
           <span class="article-date">${fmtDate(a.date)}</span>
           <span class="article-lire" onclick="openArticleFull(${a.id})">Lire →</span>
@@ -678,7 +715,7 @@ function openArticleFull(id){
   document.getElementById('fullCat').textContent=a.cat;
   document.getElementById('fullTitre').textContent=a.titre;
   document.getElementById('fullDate').textContent=fmtDate(a.date);
-  document.getElementById('fullBody').textContent=a.contenu||a.extrait;
+  document.getElementById('fullBody').innerHTML=mdToHtml(a.contenu||a.extrait);
   document.getElementById('articleFull').classList.add('open');
   window.scrollTo(0,0);
 }
