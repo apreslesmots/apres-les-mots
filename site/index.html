@@ -542,16 +542,26 @@ footer{background:#1a1625;padding:2.5rem 4rem;display:flex;align-items:center;ju
 <!-- PAGE BLOG -->
 <!-- PAGE OUTILS -->
 <div class="page" id="page-outils">
-<section style="padding:5rem 2rem 2rem;max-width:900px;margin:0 auto;text-align:center;">
-  <p style="font-size:0.8rem;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:#f0a882;margin-bottom:0.8rem;">Outils interactifs</p>
-  <h1 style="font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,5vw,3rem);color:#7c6aaa;margin-bottom:1rem;">Outils psycho-éducatifs</h1>
-  <p style="font-size:1rem;line-height:1.7;color:#5a4f6e;font-weight:300;max-width:600px;margin:0 auto 3rem;">Des jeux de mots pour mettre des mots sur les violences psychologiques — parce que les nommer, c'est déjà les reconnaître.</p>
-  <div style="display:flex;gap:1rem;justify-content:center;margin-bottom:2.5rem;flex-wrap:wrap;">
-    <button id="btn-outil-fleches" onclick="afficherOutil('fleches')" style="font-family:'DM Sans',sans-serif;font-size:0.9rem;font-weight:500;padding:0.7rem 1.6rem;border-radius:2rem;border:2px solid #7c6aaa;background:#7c6aaa;color:white;cursor:pointer;margin:0.3rem;">Les mots pour le dire</button>
-    <button id="btn-outil-synonymes" onclick="afficherOutil('synonymes')" style="font-family:'DM Sans',sans-serif;font-size:0.9rem;font-weight:500;padding:0.7rem 1.6rem;border-radius:2rem;border:2px solid #e8e3f0;background:white;color:#7c6aaa;cursor:pointer;margin:0.3rem;">Vrai ou faux ?</button>
-  </div>
-</section>
-<div id="outil-fleches" style="display:block;"><style>
+<style>
+
+#page-outils {
+
+  --lavande: #b8a9d9;
+  --violet: #7c6aaa;
+  --violet-fonce: #4a3878;
+  --peche: #f0a882;
+  --peche-clair: #fde8da;
+  --creme: #faf7f4;
+  --texte: #2d2440;
+  --gris-doux: #e8e3f0;
+  --vrai: #6aaa8a;
+  --vrai-clair: #e8f5ee;
+  --faux: #c96a6a;
+  --faux-clair: #faeaea;
+
+  font-family: 'DM Sans', sans-serif;
+}
+
 /* HEADER */
   .header {
     background: var(--violet-fonce);
@@ -1054,366 +1064,6 @@ footer{background:#1a1625;padding:2.5rem 4rem;display:flex;align-items:center;ju
     color: var(--violet);
     text-decoration: none;
   }
-</style>
-<div class="nav-thematiques" id="nav-thematiques" style="display:none">
-  <button class="btn-thematique actif" onclick="chargerThematique(0)">Violence directe</button>
-  <button class="btn-thematique" onclick="chargerThematique(1)">Manipulation</button>
-  <button class="btn-thematique" onclick="chargerThematique(2)">Défaillance parentale</button>
-</div>
-
-<div class="conteneur">
-  <div class="titre-thematique" id="titre-thematique" style="display:none">
-    <div class="numero" id="num-thematique">Thématique 1 sur 3</div>
-    <h2 id="nom-thematique">Les actes de violence directe</h2>
-  </div>
-
-  <div class="progression" id="progression"></div>
-
-  <div id="zone-jeu"></div>
-  <div class="message-fin" id="message-fin">
-    <div class="emoji">✦</div>
-    <h3>Thématique terminée</h3>
-    <p>Vous avez exploré tous les mots de cette thématique. Chaque mot reconnu est un pas vers la compréhension de ce qui a pu se passer.</p>
-    <div class="encadre-ressources">
-      <div class="label-ressources">Pour aller plus loin</div>
-      <p>Ces sujets vous touchent ou vous questionnent ? L'association Après les mots propose des ressources, des articles et des espaces pour continuer ce chemin.</p>
-      <p><a href="https://apres-les-mots.vercel.app" target="_blank">Visiter le site de l'association →</a></p>
-      <p>Une thérapie individuelle peut être un espace précieux pour explorer ces questions à votre propre rythme. Des groupes de parole sont également disponibles pour celles et ceux qui souhaitent partager leur expérience avec d'autres personnes concernées.</p>
-    </div>
-    <div style="margin-top:1.5rem;">
-      <button class="btn-recommencer" onclick="recommencer()">Recommencer</button>
-      <button class="btn-suivant" id="btn-suivant" onclick="thematiqueSuivante()">Thématique suivante →</button>
-    </div>
-  </div>
-</div>
-
-<script>
-const THEMATIQUES = [
-  {
-    titre: "Les actes de violence directe",
-    mots: [
-      {
-        mot: "CRIS",
-        indice: "Quand un adulte élève la voix de façon intense et répétée sur un enfant. Même sans mots blessants, ça provoque de la peur et active le système d'alarme du corps — comme face à un danger.",
-        plusLoin: "Les cris répétés sont une forme de violence psychologique. Le corps d'un enfant ne fait pas la différence entre un cri et une menace physique. Avec le temps, cela peut créer une hypervigilance — rester constamment sur le qui-vive, même dans des environnements calmes."
-      },
-      {
-        mot: "HUMILIATION",
-        indice: "Quand un adulte rabaisse un enfant — devant les autres ou en privé — sur ce qu'il·elle est, ce qu'il·elle ressent ou ce qu'il·elle fait. Ça peut passer par des mots, des moqueries, des comparaisons ou des regards.",
-        plusLoin: "L'humiliation attaque l'image que l'enfant a de lui·elle-même. Répétée, elle peut conduire à une honte profonde — pas « j'ai fait quelque chose de mal » mais « je suis quelque chose de mal ». Cette honte-là est silencieuse et difficile à nommer, mais elle structure durablement la façon dont on se perçoit."
-      },
-      {
-        mot: "PUNITION",
-        indice: "Quand un adulte fait subir quelque chose de désagréable à un enfant — ou lui retire quelque chose d'important — pour le·la sanctionner. Ça peut aller du silence prolongé au châtiment physique, en passant par les privations.",
-        plusLoin: "La punition est souvent confondue avec le fait de poser des limites — mais ce sont deux choses différentes. Poser une limite, c'est établir un lien logique entre un acte et une conséquence : un jouet cassé intentionnellement ne sera pas remplacé tout de suite, mais prendre soin de ses affaires ouvre la possibilité d'en avoir de nouvelles. La conséquence est proportionnée, explicable et sans humiliation. La punition, elle, vise à faire souffrir pour obtenir l'obéissance. Les recherches en psychologie du développement montrent que le renforcement positif — valoriser les comportements souhaitables — est bien plus efficace sur le long terme que le renforcement négatif. Et surtout, un enfant puni de façon excessive ou imprévisible n'apprend pas ce qu'il·elle a mal fait — il·elle apprend à avoir peur."
-      },
-      {
-        mot: "DÉVALORISATION",
-        indice: "Quand un adulte diminue systématiquement ce qu'un enfant est, fait ou ressent. Ça peut passer par des critiques constantes, des comparaisons défavorables, ou l'absence totale de reconnaissance — même face à ses efforts.",
-        plusLoin: "La dévalorisation est particulièrement insidieuse parce qu'elle est rarement spectaculaire. Elle s'installe dans le quotidien — un soupir, une remarque, un « c'est pas si bien que ça ». À force, l'enfant intériorise ce regard négatif et le fait sien : il·elle devient son·sa propre dévalorisant·e. C'est ce qu'on appelle le critique intérieur — cette voix intérieure qui répète les mots de l'autre longtemps après que l'autre est parti·e."
-      }
-    ]
-  },
-  {
-    titre: "Les mécanismes psychologiques de manipulation",
-    mots: [
-      {
-        mot: "GASLIGHTING",
-        indice: "Quand un adulte amène un enfant à douter de sa propre mémoire, de ses perceptions ou de sa santé mentale. « Tu inventes », « ça ne s'est jamais passé comme ça », « tu es trop sensible·ble » — jusqu'à ce que l'enfant ne fasse plus confiance à ce qu'il·elle vit.",
-        plusLoin: "Le terme vient d'un film des années 40 dans lequel un mari manipule sa femme pour lui faire croire qu'elle devient folle. Dans le contexte familial, le gaslighting peut être conscient ou non — mais ses effets sont les mêmes : l'enfant apprend à se méfier de lui·elle-même plutôt que de la personne qui lui fait du mal. Cela rend la violence très difficile à reconnaître, et encore plus difficile à nommer."
-      },
-      {
-        mot: "INVALIDATION",
-        indice: "Quand un adulte nie, minimise ou se moque de ce qu'un enfant ressent. « Arrête de pleurer pour rien », « tu exagères », « t'as pas de raison d'avoir peur ». Le ressenti de l'enfant est traité comme faux ou excessif.",
-        plusLoin: "Les émotions ont toutes une fonction — elles signalent quelque chose d'important sur ce qu'on vit. Quand un adulte invalide systématiquement les émotions d'un enfant, celui·celle-ci apprend à ne pas faire confiance à ce qu'il·elle ressent. À l'âge adulte, cela peut se traduire par une difficulté à identifier ses propres besoins, à se sentir légitime·e de souffrir, ou à demander de l'aide."
-      },
-      {
-        mot: "CULPABILISATION",
-        indice: "Quand un adulte amène un enfant à se sentir responsable de ce qui ne va pas — dans la famille, dans la relation, ou dans l'humeur de l'adulte. « C'est à cause de toi », « tu me rends malade », « si tu te comportais mieux, ça irait ».",
-        plusLoin: "Un enfant est toujours dépendant des adultes qui l'entourent — affectivement, matériellement, physiquement. Quand ces mêmes adultes lui font porter la responsabilité de leur propre état émotionnel, l'enfant n'a pas d'autre choix que d'y croire. Ce n'est pas une fragilité — c'est une réponse logique à une situation impossible. À l'âge adulte, cette culpabilité intériorisée peut rendre très difficile le fait de poser des limites, de dire non, ou de penser à soi sans se sentir égoïste·e."
-      },
-      {
-        mot: "EMPRISE",
-        indice: "Quand un adulte prend un contrôle progressif et total sur la façon dont un enfant pense, ressent et se comporte. Ce n'est pas un événement isolé — c'est un processus qui s'installe dans le temps, souvent sans que l'enfant s'en rende compte.",
-        plusLoin: "L'emprise est particulièrement difficile à reconnaître parce qu'elle ne ressemble pas toujours à de la violence. Elle peut passer par l'amour, la protection excessive, la fusion — « je fais tout pour toi », « personne ne t'aimera comme moi ». L'enfant sous emprise apprend à voir le monde à travers le regard de l'adulte qui le·la contrôle, et perd progressivement accès à ses propres pensées, désirs et perceptions. Reconnaître l'emprise vécue dans l'enfance est souvent un processus long — et nécessite souvent un accompagnement professionnel."
-      }
-    ]
-  },
-  {
-    titre: "Les formes de défaillance parentale",
-    mots: [
-      {
-        mot: "NÉGLIGENCE",
-        indice: "Quand un adulte ne répond pas — de façon répétée — aux besoins fondamentaux d'un enfant. Ces besoins sont à la fois physiques (nourriture, soins, logement) et émotionnels (affection, sécurité, attention).",
-        plusLoin: "La négligence est souvent invisible parce qu'elle laisse peu de traces apparentes. Il n'y a pas de geste, pas de mot — il y a une absence. Pourtant, pour un enfant, ne pas être vu·e, entendu·e ou pris·e en charge est aussi douloureux que d'être blessé·e activement. La négligence émotionnelle en particulier — grandir sans que ses émotions soient accueillies — est l'une des formes de violence les plus fréquentes et les moins reconnues."
-      },
-      {
-        mot: "PARENTIFICATION",
-        indice: "Quand un enfant se retrouve à remplir un rôle qui devrait être celui d'un adulte — s'occuper des frères et sœurs, gérer les émotions du parent, assurer la paix dans la famille. L'enfant devient responsable de ce dont les adultes devraient être responsables.",
-        plusLoin: "La parentification est souvent vécue — et présentée — comme une fierté. « Tu es si mature », « je ne sais pas ce que je ferais sans toi », « tu es le·la grand·e ». Ces mots semblent valorisants, mais ils masquent un renversement des rôles qui prive l'enfant de son droit à être simplement enfant — à ne pas porter, à ne pas gérer, à ne pas réparer. À l'âge adulte, les personnes parentifiées ont souvent du mal à recevoir de l'aide, à exprimer leurs propres besoins, ou à exister sans se sentir utiles."
-      },
-      {
-        mot: "ABANDON",
-        indice: "Quand un enfant perd — physiquement ou émotionnellement — la présence d'un adulte dont il·elle a besoin pour grandir. Il peut être concret ou invisible : un parent présent physiquement mais absent affectivement.",
-        plusLoin: "L'abandon émotionnel est souvent le plus difficile à nommer — parce que l'adulte était là, physiquement. Mais être dans la même pièce qu'un parent qui ne voit pas, n'entend pas, ne répond pas à ses besoins affectifs, c'est aussi une forme d'abandon. Pour un enfant, l'absence affective répétée peut créer une peur profonde d'être quitté·e ou de ne pas être suffisant·e pour être aimé·e — une peur qui peut traverser toute une vie."
-      },
-      {
-        mot: "REJET",
-        indice: "Quand un enfant reçoit le message — par les mots, les attitudes ou les comportements d'un adulte — qu'il·elle est indésirable, de trop, ou qu'il·elle ne mérite pas d'être aimé·e. Ce message peut être explicite ou jamais formulé clairement, mais il est ressenti profondément.",
-        plusLoin: "Le rejet parental est l'une des expériences les plus douloureuses qu'un enfant puisse traverser — parce que le besoin d'être accepté·e par ses parents est un besoin fondamental, pas un caprice. Quand ce besoin n'est pas comblé, l'enfant cherche souvent à s'expliquer pourquoi : et la réponse qu'il·elle trouve est presque toujours la même — que c'est de sa faute, qu'il·elle n'est pas assez bien. Ce n'est jamais vrai. Le rejet dit quelque chose de l'adulte, jamais de l'enfant."
-      }
-    ]
-  }
-];
-
-let thematiqueActuelle = 0;
-let motActuel = 0;
-let etats = [];
-let clicsIndice = 0;
-
-function afficherIntro() {
-  document.getElementById('zone-jeu').innerHTML = `
-    <div class="ecran-intro">
-      <div class="label-intro">Avant de commencer</div>
-      <p>Être en relation — être parent, frère, sœur, enfant, partenaire — c'est difficile. Ça amène des maladresses, des quiproquos, des moments de frustration. Crier une fois, dénigrer dans un moment de fatigue, mal réagir : ça arrive, à tout le monde.</p>
-      <p>Ce qui crée un système de violence, ce n'est pas l'acte isolé. C'est la répétition. C'est l'absence de remise en question. C'est le refus de se responsabiliser, et l'absence d'excuse, de culpabilité ou de volonté de faire autrement. Quand un comportement blessant se systématise, il installe un climat de peur et d'insécurité — et c'est ce climat qui définit la violence psychologique.</p>
-      <p><em>Ce jeu explore des mots pour nommer ce qui a pu se passer. Prenez le temps d'y réfléchir.</em></p>
-      <button class="btn-commencer" onclick="demarrerJeu()">Commencer →</button>
-    </div>
-  `;
-}
-
-function demarrerJeu() {
-  document.getElementById('nav-thematiques').style.display = 'flex';
-  document.getElementById('titre-thematique').style.display = 'block';
-  chargerThematique(0);
-}
-
-function normaliser(str) {
-  return str.toUpperCase()
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .replace(/[^A-Z]/g, "");
-}
-
-function chargerThematique(index) {
-  thematiqueActuelle = index;
-  motActuel = 0;
-  etats = THEMATIQUES[index].mots.map(() => 'en-cours');
-  clicsIndice = 0;
-
-  // Nav buttons
-  document.querySelectorAll('.btn-thematique').forEach((b, i) => {
-    b.classList.toggle('actif', i === index);
-  });
-
-  const t = THEMATIQUES[index];
-  document.getElementById('num-thematique').textContent = `Thématique ${index + 1} sur 3`;
-  document.getElementById('nom-thematique').textContent = t.titre;
-
-  document.getElementById('message-fin').style.display = 'none';
-  document.getElementById('btn-suivant').style.display = index < 2 ? 'inline-block' : 'none';
-
-  mettreAJourProgression();
-  afficherMotActuel();
-}
-
-function mettreAJourProgression() {
-  const mots = THEMATIQUES[thematiqueActuelle].mots;
-  const prog = document.getElementById('progression');
-  prog.innerHTML = mots.map((_, i) => {
-    let classe = 'dot-progression';
-    if (etats[i] === 'trouve') classe += ' trouve';
-    else if (i === motActuel) classe += ' actif';
-    return `<div class="${classe}"></div>`;
-  }).join('');
-}
-
-function afficherMotActuel() {
-  const mots = THEMATIQUES[thematiqueActuelle].mots;
-  if (motActuel >= mots.length) {
-    document.getElementById('zone-jeu').innerHTML = '';
-    document.getElementById('message-fin').style.display = 'block';
-    document.getElementById('progression').innerHTML = mots.map(() =>
-      `<div class="dot-progression trouve"></div>`).join('');
-    return;
-  }
-
-  const m = mots[motActuel];
-  const lettres = [...m.mot.replace(/[^A-ZÀÂÄÉÈÊËÎÏÔÙÛÜŸŒÆ]/gi, '')];
-  const cases = lettres.map((l, i) => {
-    // La première lettre est toujours visible d'emblée
-    if (i === 0) {
-      return `<div class="case-lettre" id="case-${i}" style="opacity:0.45">${l.toUpperCase()}</div>`;
-    }
-    return `<div class="case-lettre" id="case-${i}"></div>`;
-  }).join('');
-
-  document.getElementById('zone-jeu').innerHTML = `
-    <div class="carte-mot" id="carte-${motActuel}">
-      <div class="entete-carte">
-        <div class="numero-mot">${motActuel + 1}.</div>
-        <div class="indice-texte">${m.indice}</div>
-      </div>
-      <div class="cases-mot">${cases}</div>
-      <div class="zone-saisie">
-        <input type="text" class="input-mot" id="input-reponse"
-          placeholder="Votre réponse…"
-          autocomplete="off" autocorrect="off" spellcheck="false"
-          onkeydown="if(event.key==='Enter') valider()">
-        <button class="btn-valider" onclick="valider()">Valider</button>
-      </div>
-      <div style="margin-top:0.6rem;">
-        <button class="btn-indice" id="btn-indice" onclick="afficherIndice()">Je donne ma langue au chat</button>
-      </div>
-    </div>
-  `;
-
-  setTimeout(() => {
-    const inp = document.getElementById('input-reponse');
-    if (inp) inp.focus();
-  }, 100);
-}
-
-function valider() {
-  const mots = THEMATIQUES[thematiqueActuelle].mots;
-  const m = mots[motActuel];
-  const input = document.getElementById('input-reponse');
-  if (!input) return;
-
-  const reponse = normaliser(input.value);
-  const attendu = normaliser(m.mot);
-
-  if (reponse === attendu) {
-    // Succès
-    etats[motActuel] = 'trouve';
-    const lettres = [...m.mot.replace(/[^A-ZÀÂÄÉÈÊËÎÏÔÙÛÜŸŒÆ]/gi, '')];
-    lettres.forEach((l, i) => {
-      const c = document.getElementById(`case-${i}`);
-      if (c) {
-        setTimeout(() => {
-          c.textContent = l.toUpperCase();
-          c.classList.add('remplie');
-        }, i * 80);
-      }
-    });
-
-    const carte = document.getElementById(`carte-${motActuel}`);
-    setTimeout(() => {
-      carte.classList.add('trouve');
-
-      // Zone saisie → badge + pour aller plus loin
-      const zoneSaisie = carte.querySelector('.zone-saisie');
-      const btnIndice = carte.querySelector('.btn-indice');
-      if (zoneSaisie) zoneSaisie.remove();
-      if (btnIndice) btnIndice.remove();
-
-      carte.insertAdjacentHTML('beforeend', `
-        <div class="badge-trouve">✦ ${m.mot}</div>
-        <div class="panneau-plus-loin">
-          <div class="label">Pour aller plus loin</div>
-          <p>${m.plusLoin}</p>
-        </div>
-        <div style="margin-top:1rem;text-align:right;">
-          <button class="btn-valider" onclick="motSuivant()" style="background:var(--peche)">
-            ${motActuel + 1 < mots.length ? 'Mot suivant →' : 'Terminer ✦'}
-          </button>
-        </div>
-      `);
-
-      mettreAJourProgression();
-    }, lettres.length * 80 + 100);
-
-  } else {
-    // Erreur
-    const cases = document.querySelectorAll('.case-lettre');
-    cases.forEach(c => {
-      c.classList.add('erreur');
-      setTimeout(() => c.classList.remove('erreur'), 500);
-    });
-    input.value = '';
-    input.focus();
-  }
-}
-
-function afficherIndice() {
-  const mots = THEMATIQUES[thematiqueActuelle].mots;
-  const m = mots[motActuel];
-  const lettres = [...m.mot.replace(/[^A-ZÀÂÄÉÈÊËÎÏÔÙÛÜŸŒÆ]/gi, '')];
-  const btnIndice = document.getElementById('btn-indice');
-
-  if (clicsIndice === 0) {
-    // 1er clic : révèle 1 lettre sur 2 parmi les lettres restantes (index impairs)
-    lettres.forEach((l, i) => {
-      if (i !== 0 && i % 2 === 0) {
-        const c = document.getElementById(`case-${i}`);
-        if (c && !c.textContent) {
-          c.textContent = l.toUpperCase();
-          c.style.opacity = '0.45';
-        }
-      }
-    });
-    clicsIndice = 1;
-    if (btnIndice) btnIndice.textContent = 'Voir la réponse';
-
-  } else if (clicsIndice === 1) {
-    // 2ème clic : révèle tout et affiche "pour aller plus loin"
-    lettres.forEach((l, i) => {
-      const c = document.getElementById(`case-${i}`);
-      if (c) {
-        c.textContent = l.toUpperCase();
-        c.style.opacity = '0.45';
-      }
-    });
-    clicsIndice = 2;
-
-    // Masquer saisie et bouton indice, afficher panneau
-    const carte = document.getElementById(`carte-${motActuel}`);
-    const zoneSaisie = carte.querySelector('.zone-saisie');
-    if (btnIndice) btnIndice.remove();
-    if (zoneSaisie) zoneSaisie.remove();
-
-    carte.insertAdjacentHTML('beforeend', `
-      <div class="panneau-plus-loin">
-        <div class="label">Pour aller plus loin</div>
-        <p>${m.plusLoin}</p>
-      </div>
-      <div style="margin-top:1rem;text-align:right;">
-        <button class="btn-valider" onclick="motSuivant()" style="background:var(--peche)">
-          ${motActuel + 1 < mots.length ? 'Mot suivant →' : 'Terminer ✦'}
-        </button>
-      </div>
-    `);
-    return;
-  }
-
-  const input = document.getElementById('input-reponse');
-  if (input) input.focus();
-}
-
-function motSuivant() {
-  motActuel++;
-  clicsIndice = 0;
-  mettreAJourProgression();
-  afficherMotActuel();
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
-function recommencer() {
-  chargerThematique(thematiqueActuelle);
-}
-
-function thematiqueSuivante() {
-  if (thematiqueActuelle < 2) {
-    chargerThematique(thematiqueActuelle + 1);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
-}
-
-// Init
-afficherIntro();
-</script></div>
-<div id="outil-synonymes" style="display:none;"><style>
 /* HEADER */
   .header {
     background: var(--violet-fonce);
@@ -1907,6 +1557,376 @@ afficherIntro();
 
   .note-bas a { color: var(--violet); text-decoration: none; }
 </style>
+<section style="padding:5rem 2rem 2rem;max-width:900px;margin:0 auto;text-align:center;">
+  <p style="font-size:0.8rem;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:#f0a882;margin-bottom:0.8rem;">Outils interactifs</p>
+  <h1 style="font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,5vw,3rem);color:#7c6aaa;margin-bottom:1rem;">Outils psycho-éducatifs</h1>
+  <p style="font-size:1rem;line-height:1.7;color:#5a4f6e;font-weight:300;max-width:600px;margin:0 auto 3rem;">Des jeux de mots pour mettre des mots sur les violences psychologiques — parce que les nommer, c'est déjà les reconnaître.</p>
+  <div style="display:flex;gap:1rem;justify-content:center;margin-bottom:2.5rem;flex-wrap:wrap;">
+    <button id="btn-outil-fleches" onclick="afficherOutil('fleches')" style="font-family:'DM Sans',sans-serif;font-size:0.9rem;font-weight:500;padding:0.7rem 1.6rem;border-radius:2rem;border:2px solid #7c6aaa;background:#7c6aaa;color:white;cursor:pointer;margin:0.3rem;transition:all 0.2s;">Les mots pour le dire</button>
+    <button id="btn-outil-synonymes" onclick="afficherOutil('synonymes')" style="font-family:'DM Sans',sans-serif;font-size:0.9rem;font-weight:500;padding:0.7rem 1.6rem;border-radius:2rem;border:2px solid #e8e3f0;background:white;color:#7c6aaa;cursor:pointer;margin:0.3rem;transition:all 0.2s;">Vrai ou faux ?</button>
+  </div>
+</section>
+<div id="outil-fleches" style="display:block;">
+<div class="nav-thematiques" id="nav-thematiques" style="display:none">
+  <button class="btn-thematique actif" onclick="chargerThematique(0)">Violence directe</button>
+  <button class="btn-thematique" onclick="chargerThematique(1)">Manipulation</button>
+  <button class="btn-thematique" onclick="chargerThematique(2)">Défaillance parentale</button>
+</div>
+
+<div class="conteneur">
+  <div class="titre-thematique" id="titre-thematique" style="display:none">
+    <div class="numero" id="num-thematique">Thématique 1 sur 3</div>
+    <h2 id="nom-thematique">Les actes de violence directe</h2>
+  </div>
+
+  <div class="progression" id="progression"></div>
+
+  <div id="zone-jeu"></div>
+  <div class="message-fin" id="message-fin">
+    <div class="emoji">✦</div>
+    <h3>Thématique terminée</h3>
+    <p>Vous avez exploré tous les mots de cette thématique. Chaque mot reconnu est un pas vers la compréhension de ce qui a pu se passer.</p>
+    <div class="encadre-ressources">
+      <div class="label-ressources">Pour aller plus loin</div>
+      <p>Ces sujets vous touchent ou vous questionnent ? L'association Après les mots propose des ressources, des articles et des espaces pour continuer ce chemin.</p>
+      <p><a href="https://apres-les-mots.vercel.app" target="_blank">Visiter le site de l'association →</a></p>
+      <p>Une thérapie individuelle peut être un espace précieux pour explorer ces questions à votre propre rythme. Des groupes de parole sont également disponibles pour celles et ceux qui souhaitent partager leur expérience avec d'autres personnes concernées.</p>
+    </div>
+    <div style="margin-top:1.5rem;">
+      <button class="btn-recommencer" onclick="recommencer()">Recommencer</button>
+      <button class="btn-suivant" id="btn-suivant" onclick="thematiqueSuivante()">Thématique suivante →</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const THEMATIQUES = [
+  {
+    titre: "Les actes de violence directe",
+    mots: [
+      {
+        mot: "CRIS",
+        indice: "Quand un adulte élève la voix de façon intense et répétée sur un enfant. Même sans mots blessants, ça provoque de la peur et active le système d'alarme du corps — comme face à un danger.",
+        plusLoin: "Les cris répétés sont une forme de violence psychologique. Le corps d'un enfant ne fait pas la différence entre un cri et une menace physique. Avec le temps, cela peut créer une hypervigilance — rester constamment sur le qui-vive, même dans des environnements calmes."
+      },
+      {
+        mot: "HUMILIATION",
+        indice: "Quand un adulte rabaisse un enfant — devant les autres ou en privé — sur ce qu'il·elle est, ce qu'il·elle ressent ou ce qu'il·elle fait. Ça peut passer par des mots, des moqueries, des comparaisons ou des regards.",
+        plusLoin: "L'humiliation attaque l'image que l'enfant a de lui·elle-même. Répétée, elle peut conduire à une honte profonde — pas « j'ai fait quelque chose de mal » mais « je suis quelque chose de mal ». Cette honte-là est silencieuse et difficile à nommer, mais elle structure durablement la façon dont on se perçoit."
+      },
+      {
+        mot: "PUNITION",
+        indice: "Quand un adulte fait subir quelque chose de désagréable à un enfant — ou lui retire quelque chose d'important — pour le·la sanctionner. Ça peut aller du silence prolongé au châtiment physique, en passant par les privations.",
+        plusLoin: "La punition est souvent confondue avec le fait de poser des limites — mais ce sont deux choses différentes. Poser une limite, c'est établir un lien logique entre un acte et une conséquence : un jouet cassé intentionnellement ne sera pas remplacé tout de suite, mais prendre soin de ses affaires ouvre la possibilité d'en avoir de nouvelles. La conséquence est proportionnée, explicable et sans humiliation. La punition, elle, vise à faire souffrir pour obtenir l'obéissance. Les recherches en psychologie du développement montrent que le renforcement positif — valoriser les comportements souhaitables — est bien plus efficace sur le long terme que le renforcement négatif. Et surtout, un enfant puni de façon excessive ou imprévisible n'apprend pas ce qu'il·elle a mal fait — il·elle apprend à avoir peur."
+      },
+      {
+        mot: "DÉVALORISATION",
+        indice: "Quand un adulte diminue systématiquement ce qu'un enfant est, fait ou ressent. Ça peut passer par des critiques constantes, des comparaisons défavorables, ou l'absence totale de reconnaissance — même face à ses efforts.",
+        plusLoin: "La dévalorisation est particulièrement insidieuse parce qu'elle est rarement spectaculaire. Elle s'installe dans le quotidien — un soupir, une remarque, un « c'est pas si bien que ça ». À force, l'enfant intériorise ce regard négatif et le fait sien : il·elle devient son·sa propre dévalorisant·e. C'est ce qu'on appelle le critique intérieur — cette voix intérieure qui répète les mots de l'autre longtemps après que l'autre est parti·e."
+      }
+    ]
+  },
+  {
+    titre: "Les mécanismes psychologiques de manipulation",
+    mots: [
+      {
+        mot: "GASLIGHTING",
+        indice: "Quand un adulte amène un enfant à douter de sa propre mémoire, de ses perceptions ou de sa santé mentale. « Tu inventes », « ça ne s'est jamais passé comme ça », « tu es trop sensible·ble » — jusqu'à ce que l'enfant ne fasse plus confiance à ce qu'il·elle vit.",
+        plusLoin: "Le terme vient d'un film des années 40 dans lequel un mari manipule sa femme pour lui faire croire qu'elle devient folle. Dans le contexte familial, le gaslighting peut être conscient ou non — mais ses effets sont les mêmes : l'enfant apprend à se méfier de lui·elle-même plutôt que de la personne qui lui fait du mal. Cela rend la violence très difficile à reconnaître, et encore plus difficile à nommer."
+      },
+      {
+        mot: "INVALIDATION",
+        indice: "Quand un adulte nie, minimise ou se moque de ce qu'un enfant ressent. « Arrête de pleurer pour rien », « tu exagères », « t'as pas de raison d'avoir peur ». Le ressenti de l'enfant est traité comme faux ou excessif.",
+        plusLoin: "Les émotions ont toutes une fonction — elles signalent quelque chose d'important sur ce qu'on vit. Quand un adulte invalide systématiquement les émotions d'un enfant, celui·celle-ci apprend à ne pas faire confiance à ce qu'il·elle ressent. À l'âge adulte, cela peut se traduire par une difficulté à identifier ses propres besoins, à se sentir légitime·e de souffrir, ou à demander de l'aide."
+      },
+      {
+        mot: "CULPABILISATION",
+        indice: "Quand un adulte amène un enfant à se sentir responsable de ce qui ne va pas — dans la famille, dans la relation, ou dans l'humeur de l'adulte. « C'est à cause de toi », « tu me rends malade », « si tu te comportais mieux, ça irait ».",
+        plusLoin: "Un enfant est toujours dépendant des adultes qui l'entourent — affectivement, matériellement, physiquement. Quand ces mêmes adultes lui font porter la responsabilité de leur propre état émotionnel, l'enfant n'a pas d'autre choix que d'y croire. Ce n'est pas une fragilité — c'est une réponse logique à une situation impossible. À l'âge adulte, cette culpabilité intériorisée peut rendre très difficile le fait de poser des limites, de dire non, ou de penser à soi sans se sentir égoïste·e."
+      },
+      {
+        mot: "EMPRISE",
+        indice: "Quand un adulte prend un contrôle progressif et total sur la façon dont un enfant pense, ressent et se comporte. Ce n'est pas un événement isolé — c'est un processus qui s'installe dans le temps, souvent sans que l'enfant s'en rende compte.",
+        plusLoin: "L'emprise est particulièrement difficile à reconnaître parce qu'elle ne ressemble pas toujours à de la violence. Elle peut passer par l'amour, la protection excessive, la fusion — « je fais tout pour toi », « personne ne t'aimera comme moi ». L'enfant sous emprise apprend à voir le monde à travers le regard de l'adulte qui le·la contrôle, et perd progressivement accès à ses propres pensées, désirs et perceptions. Reconnaître l'emprise vécue dans l'enfance est souvent un processus long — et nécessite souvent un accompagnement professionnel."
+      }
+    ]
+  },
+  {
+    titre: "Les formes de défaillance parentale",
+    mots: [
+      {
+        mot: "NÉGLIGENCE",
+        indice: "Quand un adulte ne répond pas — de façon répétée — aux besoins fondamentaux d'un enfant. Ces besoins sont à la fois physiques (nourriture, soins, logement) et émotionnels (affection, sécurité, attention).",
+        plusLoin: "La négligence est souvent invisible parce qu'elle laisse peu de traces apparentes. Il n'y a pas de geste, pas de mot — il y a une absence. Pourtant, pour un enfant, ne pas être vu·e, entendu·e ou pris·e en charge est aussi douloureux que d'être blessé·e activement. La négligence émotionnelle en particulier — grandir sans que ses émotions soient accueillies — est l'une des formes de violence les plus fréquentes et les moins reconnues."
+      },
+      {
+        mot: "PARENTIFICATION",
+        indice: "Quand un enfant se retrouve à remplir un rôle qui devrait être celui d'un adulte — s'occuper des frères et sœurs, gérer les émotions du parent, assurer la paix dans la famille. L'enfant devient responsable de ce dont les adultes devraient être responsables.",
+        plusLoin: "La parentification est souvent vécue — et présentée — comme une fierté. « Tu es si mature », « je ne sais pas ce que je ferais sans toi », « tu es le·la grand·e ». Ces mots semblent valorisants, mais ils masquent un renversement des rôles qui prive l'enfant de son droit à être simplement enfant — à ne pas porter, à ne pas gérer, à ne pas réparer. À l'âge adulte, les personnes parentifiées ont souvent du mal à recevoir de l'aide, à exprimer leurs propres besoins, ou à exister sans se sentir utiles."
+      },
+      {
+        mot: "ABANDON",
+        indice: "Quand un enfant perd — physiquement ou émotionnellement — la présence d'un adulte dont il·elle a besoin pour grandir. Il peut être concret ou invisible : un parent présent physiquement mais absent affectivement.",
+        plusLoin: "L'abandon émotionnel est souvent le plus difficile à nommer — parce que l'adulte était là, physiquement. Mais être dans la même pièce qu'un parent qui ne voit pas, n'entend pas, ne répond pas à ses besoins affectifs, c'est aussi une forme d'abandon. Pour un enfant, l'absence affective répétée peut créer une peur profonde d'être quitté·e ou de ne pas être suffisant·e pour être aimé·e — une peur qui peut traverser toute une vie."
+      },
+      {
+        mot: "REJET",
+        indice: "Quand un enfant reçoit le message — par les mots, les attitudes ou les comportements d'un adulte — qu'il·elle est indésirable, de trop, ou qu'il·elle ne mérite pas d'être aimé·e. Ce message peut être explicite ou jamais formulé clairement, mais il est ressenti profondément.",
+        plusLoin: "Le rejet parental est l'une des expériences les plus douloureuses qu'un enfant puisse traverser — parce que le besoin d'être accepté·e par ses parents est un besoin fondamental, pas un caprice. Quand ce besoin n'est pas comblé, l'enfant cherche souvent à s'expliquer pourquoi : et la réponse qu'il·elle trouve est presque toujours la même — que c'est de sa faute, qu'il·elle n'est pas assez bien. Ce n'est jamais vrai. Le rejet dit quelque chose de l'adulte, jamais de l'enfant."
+      }
+    ]
+  }
+];
+
+let thematiqueActuelle = 0;
+let motActuel = 0;
+let etats = [];
+let clicsIndice = 0;
+
+function afficherIntro() {
+  document.getElementById('zone-jeu').innerHTML = `
+    <div class="ecran-intro">
+      <div class="label-intro">Avant de commencer</div>
+      <p>Être en relation — être parent, frère, sœur, enfant, partenaire — c'est difficile. Ça amène des maladresses, des quiproquos, des moments de frustration. Crier une fois, dénigrer dans un moment de fatigue, mal réagir : ça arrive, à tout le monde.</p>
+      <p>Ce qui crée un système de violence, ce n'est pas l'acte isolé. C'est la répétition. C'est l'absence de remise en question. C'est le refus de se responsabiliser, et l'absence d'excuse, de culpabilité ou de volonté de faire autrement. Quand un comportement blessant se systématise, il installe un climat de peur et d'insécurité — et c'est ce climat qui définit la violence psychologique.</p>
+      <p><em>Ce jeu explore des mots pour nommer ce qui a pu se passer. Prenez le temps d'y réfléchir.</em></p>
+      <button class="btn-commencer" onclick="demarrerJeu()">Commencer →</button>
+    </div>
+  `;
+}
+
+function demarrerJeu() {
+  document.getElementById('nav-thematiques').style.display = 'flex';
+  document.getElementById('titre-thematique').style.display = 'block';
+  chargerThematique(0);
+}
+
+function normaliser(str) {
+  return str.toUpperCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^A-Z]/g, "");
+}
+
+function chargerThematique(index) {
+  thematiqueActuelle = index;
+  motActuel = 0;
+  etats = THEMATIQUES[index].mots.map(() => 'en-cours');
+  clicsIndice = 0;
+
+  // Nav buttons
+  document.querySelectorAll('.btn-thematique').forEach((b, i) => {
+    b.classList.toggle('actif', i === index);
+  });
+
+  const t = THEMATIQUES[index];
+  document.getElementById('num-thematique').textContent = `Thématique ${index + 1} sur 3`;
+  document.getElementById('nom-thematique').textContent = t.titre;
+
+  document.getElementById('message-fin').style.display = 'none';
+  document.getElementById('btn-suivant').style.display = index < 2 ? 'inline-block' : 'none';
+
+  mettreAJourProgression();
+  afficherMotActuel();
+}
+
+function mettreAJourProgression() {
+  const mots = THEMATIQUES[thematiqueActuelle].mots;
+  const prog = document.getElementById('progression');
+  prog.innerHTML = mots.map((_, i) => {
+    let classe = 'dot-progression';
+    if (etats[i] === 'trouve') classe += ' trouve';
+    else if (i === motActuel) classe += ' actif';
+    return `<div class="${classe}"></div>`;
+  }).join('');
+}
+
+function afficherMotActuel() {
+  const mots = THEMATIQUES[thematiqueActuelle].mots;
+  if (motActuel >= mots.length) {
+    document.getElementById('zone-jeu').innerHTML = '';
+    document.getElementById('message-fin').style.display = 'block';
+    document.getElementById('progression').innerHTML = mots.map(() =>
+      `<div class="dot-progression trouve"></div>`).join('');
+    return;
+  }
+
+  const m = mots[motActuel];
+  const lettres = [...m.mot.replace(/[^A-ZÀÂÄÉÈÊËÎÏÔÙÛÜŸŒÆ]/gi, '')];
+  const cases = lettres.map((l, i) => {
+    // La première lettre est toujours visible d'emblée
+    if (i === 0) {
+      return `<div class="case-lettre" id="case-${i}" style="opacity:0.45">${l.toUpperCase()}</div>`;
+    }
+    return `<div class="case-lettre" id="case-${i}"></div>`;
+  }).join('');
+
+  document.getElementById('zone-jeu').innerHTML = `
+    <div class="carte-mot" id="carte-${motActuel}">
+      <div class="entete-carte">
+        <div class="numero-mot">${motActuel + 1}.</div>
+        <div class="indice-texte">${m.indice}</div>
+      </div>
+      <div class="cases-mot">${cases}</div>
+      <div class="zone-saisie">
+        <input type="text" class="input-mot" id="input-reponse"
+          placeholder="Votre réponse…"
+          autocomplete="off" autocorrect="off" spellcheck="false"
+          onkeydown="if(event.key==='Enter') valider()">
+        <button class="btn-valider" onclick="valider()">Valider</button>
+      </div>
+      <div style="margin-top:0.6rem;">
+        <button class="btn-indice" id="btn-indice" onclick="afficherIndice()">Je donne ma langue au chat</button>
+      </div>
+    </div>
+  `;
+
+  setTimeout(() => {
+    const inp = document.getElementById('input-reponse');
+    if (inp) inp.focus();
+  }, 100);
+}
+
+function valider() {
+  const mots = THEMATIQUES[thematiqueActuelle].mots;
+  const m = mots[motActuel];
+  const input = document.getElementById('input-reponse');
+  if (!input) return;
+
+  const reponse = normaliser(input.value);
+  const attendu = normaliser(m.mot);
+
+  if (reponse === attendu) {
+    // Succès
+    etats[motActuel] = 'trouve';
+    const lettres = [...m.mot.replace(/[^A-ZÀÂÄÉÈÊËÎÏÔÙÛÜŸŒÆ]/gi, '')];
+    lettres.forEach((l, i) => {
+      const c = document.getElementById(`case-${i}`);
+      if (c) {
+        setTimeout(() => {
+          c.textContent = l.toUpperCase();
+          c.classList.add('remplie');
+        }, i * 80);
+      }
+    });
+
+    const carte = document.getElementById(`carte-${motActuel}`);
+    setTimeout(() => {
+      carte.classList.add('trouve');
+
+      // Zone saisie → badge + pour aller plus loin
+      const zoneSaisie = carte.querySelector('.zone-saisie');
+      const btnIndice = carte.querySelector('.btn-indice');
+      if (zoneSaisie) zoneSaisie.remove();
+      if (btnIndice) btnIndice.remove();
+
+      carte.insertAdjacentHTML('beforeend', `
+        <div class="badge-trouve">✦ ${m.mot}</div>
+        <div class="panneau-plus-loin">
+          <div class="label">Pour aller plus loin</div>
+          <p>${m.plusLoin}</p>
+        </div>
+        <div style="margin-top:1rem;text-align:right;">
+          <button class="btn-valider" onclick="motSuivant()" style="background:var(--peche)">
+            ${motActuel + 1 < mots.length ? 'Mot suivant →' : 'Terminer ✦'}
+          </button>
+        </div>
+      `);
+
+      mettreAJourProgression();
+    }, lettres.length * 80 + 100);
+
+  } else {
+    // Erreur
+    const cases = document.querySelectorAll('.case-lettre');
+    cases.forEach(c => {
+      c.classList.add('erreur');
+      setTimeout(() => c.classList.remove('erreur'), 500);
+    });
+    input.value = '';
+    input.focus();
+  }
+}
+
+function afficherIndice() {
+  const mots = THEMATIQUES[thematiqueActuelle].mots;
+  const m = mots[motActuel];
+  const lettres = [...m.mot.replace(/[^A-ZÀÂÄÉÈÊËÎÏÔÙÛÜŸŒÆ]/gi, '')];
+  const btnIndice = document.getElementById('btn-indice');
+
+  if (clicsIndice === 0) {
+    // 1er clic : révèle 1 lettre sur 2 parmi les lettres restantes (index impairs)
+    lettres.forEach((l, i) => {
+      if (i !== 0 && i % 2 === 0) {
+        const c = document.getElementById(`case-${i}`);
+        if (c && !c.textContent) {
+          c.textContent = l.toUpperCase();
+          c.style.opacity = '0.45';
+        }
+      }
+    });
+    clicsIndice = 1;
+    if (btnIndice) btnIndice.textContent = 'Voir la réponse';
+
+  } else if (clicsIndice === 1) {
+    // 2ème clic : révèle tout et affiche "pour aller plus loin"
+    lettres.forEach((l, i) => {
+      const c = document.getElementById(`case-${i}`);
+      if (c) {
+        c.textContent = l.toUpperCase();
+        c.style.opacity = '0.45';
+      }
+    });
+    clicsIndice = 2;
+
+    // Masquer saisie et bouton indice, afficher panneau
+    const carte = document.getElementById(`carte-${motActuel}`);
+    const zoneSaisie = carte.querySelector('.zone-saisie');
+    if (btnIndice) btnIndice.remove();
+    if (zoneSaisie) zoneSaisie.remove();
+
+    carte.insertAdjacentHTML('beforeend', `
+      <div class="panneau-plus-loin">
+        <div class="label">Pour aller plus loin</div>
+        <p>${m.plusLoin}</p>
+      </div>
+      <div style="margin-top:1rem;text-align:right;">
+        <button class="btn-valider" onclick="motSuivant()" style="background:var(--peche)">
+          ${motActuel + 1 < mots.length ? 'Mot suivant →' : 'Terminer ✦'}
+        </button>
+      </div>
+    `);
+    return;
+  }
+
+  const input = document.getElementById('input-reponse');
+  if (input) input.focus();
+}
+
+function motSuivant() {
+  motActuel++;
+  clicsIndice = 0;
+  mettreAJourProgression();
+  afficherMotActuel();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function recommencer() {
+  chargerThematique(thematiqueActuelle);
+}
+
+function thematiqueSuivante() {
+  if (thematiqueActuelle < 2) {
+    chargerThematique(thematiqueActuelle + 1);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+}
+
+// Init
+afficherIntro();
+</script>
+</div>
+<div id="outil-synonymes" style="display:none;">
 <div class="barre-progression">
   <div class="dots-progression" id="dots-progression"></div>
   <div class="compteur" id="compteur">1 / 9</div>
@@ -2188,8 +2208,21 @@ function recommencer() {
 
 // Init
 afficherIntro();
-</script></div>
+</script>
+</div>
 <script>
+
+window.afficherOutil = function(outil) {
+  document.getElementById('outil-fleches').style.display = outil === 'fleches' ? 'block' : 'none';
+  document.getElementById('outil-synonymes').style.display = outil === 'synonymes' ? 'block' : 'none';
+  var btnF = document.getElementById('btn-outil-fleches');
+  var btnS = document.getElementById('btn-outil-synonymes');
+  var actif = 'font-family:DM Sans,sans-serif;font-size:0.9rem;font-weight:500;padding:0.7rem 1.6rem;border-radius:2rem;border:2px solid #7c6aaa;background:#7c6aaa;color:white;cursor:pointer;margin:0.3rem;transition:all 0.2s;';
+  var inactif = 'font-family:DM Sans,sans-serif;font-size:0.9rem;font-weight:500;padding:0.7rem 1.6rem;border-radius:2rem;border:2px solid #e8e3f0;background:white;color:#7c6aaa;cursor:pointer;margin:0.3rem;transition:all 0.2s;';
+  btnF.style.cssText = outil === 'fleches' ? actif : inactif;
+  btnS.style.cssText = outil === 'synonymes' ? actif : inactif;
+};
+
 const THEMATIQUES = [
   {
     titre: "Les actes de violence directe",
@@ -2784,18 +2817,6 @@ function recommencer() {
 
 // Init
 afficherIntro();
-
-function afficherOutil(outil) {
-  document.getElementById('outil-fleches').style.display = outil === 'fleches' ? 'block' : 'none';
-  document.getElementById('outil-synonymes').style.display = outil === 'synonymes' ? 'block' : 'none';
-  var btnF = document.getElementById('btn-outil-fleches');
-  var btnS = document.getElementById('btn-outil-synonymes');
-  var actif = 'font-family:DM Sans,sans-serif;font-size:0.9rem;font-weight:500;padding:0.7rem 1.6rem;border-radius:2rem;border:2px solid #7c6aaa;background:#7c6aaa;color:white;cursor:pointer;margin:0.3rem;';
-  var inactif = 'font-family:DM Sans,sans-serif;font-size:0.9rem;font-weight:500;padding:0.7rem 1.6rem;border-radius:2rem;border:2px solid #e8e3f0;background:white;color:#7c6aaa;cursor:pointer;margin:0.3rem;';
-  btnF.style.cssText = outil === 'fleches' ? actif : inactif;
-  btnS.style.cssText = outil === 'synonymes' ? actif : inactif;
-}
-
 </script>
 </div>
 <!-- FIN PAGE OUTILS -->
