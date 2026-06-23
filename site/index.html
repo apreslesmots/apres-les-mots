@@ -545,7 +545,6 @@ footer{background:#1a1625;padding:2.5rem 4rem;display:flex;align-items:center;ju
 <style>
 
 #page-outils {
-
   --lavande: #b8a9d9;
   --violet: #7c6aaa;
   --violet-fonce: #4a3878;
@@ -558,8 +557,6 @@ footer{background:#1a1625;padding:2.5rem 4rem;display:flex;align-items:center;ju
   --vrai-clair: #e8f5ee;
   --faux: #c96a6a;
   --faux-clair: #faeaea;
-
-  font-family: 'DM Sans', sans-serif;
 }
 
 /* HEADER */
@@ -1560,10 +1557,10 @@ footer{background:#1a1625;padding:2.5rem 4rem;display:flex;align-items:center;ju
 <section style="padding:5rem 2rem 2rem;max-width:900px;margin:0 auto;text-align:center;">
   <p style="font-size:0.8rem;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:#f0a882;margin-bottom:0.8rem;">Outils interactifs</p>
   <h1 style="font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,5vw,3rem);color:#7c6aaa;margin-bottom:1rem;">Outils psycho-éducatifs</h1>
-  <p style="font-size:1rem;line-height:1.7;color:#5a4f6e;font-weight:300;max-width:600px;margin:0 auto 3rem;">Des jeux de mots pour mettre des mots sur les violences psychologiques — parce que les nommer, c'est déjà les reconnaître.</p>
+  <p style="font-size:1rem;line-height:1.7;color:#5a4f6e;font-weight:300;max-width:600px;margin:0 auto 3rem;">Des jeux de mots pour mettre des mots sur les violences psychologiques — parce que les nommer, c’est déjà les reconnaître.</p>
   <div style="display:flex;gap:1rem;justify-content:center;margin-bottom:2.5rem;flex-wrap:wrap;">
     <button id="btn-outil-fleches" onclick="afficherOutil('fleches')" style="font-family:'DM Sans',sans-serif;font-size:0.9rem;font-weight:500;padding:0.7rem 1.6rem;border-radius:2rem;border:2px solid #7c6aaa;background:#7c6aaa;color:white;cursor:pointer;margin:0.3rem;transition:all 0.2s;">Les mots pour le dire</button>
-    <button id="btn-outil-synonymes" onclick="afficherOutil('synonymes')" style="font-family:'DM Sans',sans-serif;font-size:0.9rem;font-weight:500;padding:0.7rem 1.6rem;border-radius:2rem;border:2px solid #e8e3f0;background:white;color:#7c6aaa;cursor:pointer;margin:0.3rem;transition:all 0.2s;">Vrai ou faux ?</button>
+    <button id="btn-outil-synonymes" onclick="afficherOutil('synonymes')" style="font-family:'DM Sans',sans-serif;font-size:0.9rem;font-weight:500;padding:0.7rem 1.6rem;border-radius:2rem;border:2px solid #e8e3f0;background:white;color:#7c6aaa;cursor:pointer;margin:0.3rem;transition:all 0.2s;">Vrai ou faux ?</button>
   </div>
 </section>
 <div id="outil-fleches" style="display:block;">
@@ -2213,16 +2210,27 @@ afficherIntro();
 <script>
 
 window.afficherOutil = function(outil) {
-  document.getElementById('outil-fleches').style.display = outil === 'fleches' ? 'block' : 'none';
-  document.getElementById('outil-synonymes').style.display = outil === 'synonymes' ? 'block' : 'none';
+  var f = document.getElementById('outil-fleches');
+  var s = document.getElementById('outil-synonymes');
   var btnF = document.getElementById('btn-outil-fleches');
   var btnS = document.getElementById('btn-outil-synonymes');
   var actif = 'font-family:DM Sans,sans-serif;font-size:0.9rem;font-weight:500;padding:0.7rem 1.6rem;border-radius:2rem;border:2px solid #7c6aaa;background:#7c6aaa;color:white;cursor:pointer;margin:0.3rem;transition:all 0.2s;';
   var inactif = 'font-family:DM Sans,sans-serif;font-size:0.9rem;font-weight:500;padding:0.7rem 1.6rem;border-radius:2rem;border:2px solid #e8e3f0;background:white;color:#7c6aaa;cursor:pointer;margin:0.3rem;transition:all 0.2s;';
-  btnF.style.cssText = outil === 'fleches' ? actif : inactif;
-  btnS.style.cssText = outil === 'synonymes' ? actif : inactif;
+  if (outil === 'fleches') {
+    f.style.display = 'block';
+    s.style.display = 'none';
+    btnF.style.cssText = actif;
+    btnS.style.cssText = inactif;
+  } else {
+    f.style.display = 'none';
+    s.style.display = 'block';
+    btnS.style.cssText = actif;
+    btnF.style.cssText = inactif;
+  }
 };
 
+
+(function() {
 const THEMATIQUES = [
   {
     titre: "Les actes de violence directe",
@@ -2547,6 +2555,12 @@ function thematiqueSuivante() {
 
 // Init
 afficherIntro();
+// Exposer init pour réinitialisation
+window._initFleches = function() { afficherIntro(); };
+})();
+
+
+(function() {
 const QUESTIONS = [
   {
     motA: "Crier",
@@ -2817,6 +2831,9 @@ function recommencer() {
 
 // Init
 afficherIntro();
+window._initSynonymes = function() { afficherIntro(); };
+})();
+
 </script>
 </div>
 <!-- FIN PAGE OUTILS -->
