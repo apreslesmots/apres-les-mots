@@ -2321,7 +2321,7 @@ function afficherIntro() {
       <p>Être en relation — être parent, frère, sœur, enfant, partenaire — c'est difficile. Ça amène des maladresses, des quiproquos, des moments de frustration. Crier une fois, dénigrer dans un moment de fatigue, mal réagir : ça arrive, à tout le monde.</p>
       <p>Ce qui crée un système de violence, ce n'est pas l'acte isolé. C'est la répétition. C'est l'absence de remise en question. C'est le refus de se responsabiliser, et l'absence d'excuse, de culpabilité ou de volonté de faire autrement. Quand un comportement blessant se systématise, il installe un climat de peur et d'insécurité — et c'est ce climat qui définit la violence psychologique.</p>
       <p><em>Ce jeu explore des mots pour nommer ce qui a pu se passer. Prenez le temps d'y réfléchir.</em></p>
-      <button class="btn-commencer" onclick="demarrerJeu()">Commencer →</button>
+      <button class="btn-commencer" onclick="FL_demarrerJeu()">Commencer →</button>
     </div>
   `;
 }
@@ -2404,10 +2404,10 @@ function afficherMotActuel() {
           placeholder="Votre réponse…"
           autocomplete="off" autocorrect="off" spellcheck="false"
           onkeydown="if(event.key==='Enter') valider()">
-        <button class="btn-valider" onclick="valider()">Valider</button>
+        <button class="btn-valider" onclick="FL_valider()">Valider</button>
       </div>
       <div style="margin-top:0.6rem;">
-        <button class="btn-indice" id="btn-indice" onclick="afficherIndice()">Je donne ma langue au chat</button>
+        <button class="btn-indice" id="btn-indice" onclick="FL_afficherIndice()">Je donne ma langue au chat</button>
       </div>
     </div>
   `;
@@ -2458,7 +2458,7 @@ function valider() {
           <p>${m.plusLoin}</p>
         </div>
         <div style="margin-top:1rem;text-align:right;">
-          <button class="btn-valider" onclick="motSuivant()" style="background:var(--peche)">
+          <button class="btn-valider" onclick="FL_motSuivant()" style="background:var(--peche)">
             ${motActuel + 1 < mots.length ? 'Mot suivant →' : 'Terminer ✦'}
           </button>
         </div>
@@ -2522,7 +2522,7 @@ function afficherIndice() {
         <p>${m.plusLoin}</p>
       </div>
       <div style="margin-top:1rem;text-align:right;">
-        <button class="btn-valider" onclick="motSuivant()" style="background:var(--peche)">
+        <button class="btn-valider" onclick="FL_motSuivant()" style="background:var(--peche)">
           ${motActuel + 1 < mots.length ? 'Mot suivant →' : 'Terminer ✦'}
         </button>
       </div>
@@ -2554,6 +2554,14 @@ function thematiqueSuivante() {
 }
 
 
+  // Exposer sur window pour les onclick
+  window.FL_demarrerJeu = demarrerJeu;
+  window.FL_valider = valider;
+  window.FL_afficherIndice = afficherIndice;
+  window.FL_motSuivant = motSuivant;
+  window.FL_recommencer = recommencer;
+  window.FL_thematiqueSuivante = thematiqueSuivante;
+  window.FL_chargerThematique = chargerThematique;
   return { init: function() { afficherIntro(); } };
 })();
 
@@ -2657,7 +2665,7 @@ function afficherIntro() {
       <p>Être en relation — être parent, frère, sœur, enfant, partenaire — c'est difficile. Ça amène des maladresses, des quiproquos, des moments de frustration. Crier une fois, dénigrer dans un moment de fatigue, mal réagir : ça arrive, à tout le monde.</p>
       <p>Ce qui crée un système de violence, ce n'est pas l'acte isolé. C'est la répétition. C'est l'absence de remise en question. C'est le refus de se responsabiliser, et l'absence d'excuse, de culpabilité ou de volonté de faire autrement. Quand un comportement blessant se systématise, il installe un climat de peur et d'insécurité — et c'est ce climat qui définit la violence psychologique.</p>
       <p><em>Ce jeu explore des distinctions subtiles. Prenez le temps d'y réfléchir.</em></p>
-      <button class="btn-commencer" onclick="demarrerJeu()">Commencer →</button>
+      <button class="btn-commencer" onclick="SY_demarrerJeu()">Commencer →</button>
     </div>
   `;
 }
@@ -2698,10 +2706,10 @@ function afficherQuestion() {
         <span class="guillemet">"</span>${q.affirmation}<span class="guillemet">"</span>
       </div>
       <div class="zone-boutons">
-        <button class="btn-reponse vrai" onclick="repondre(true)">
+        <button class="btn-reponse vrai" onclick="SY_repondre(true)">
           ✓ Vrai
         </button>
-        <button class="btn-reponse faux" onclick="repondre(false)">
+        <button class="btn-reponse faux" onclick="SY_repondre(false)">
           ✗ Faux
         </button>
       </div>
@@ -2750,7 +2758,7 @@ function repondre(reponseUtilisateur) {
         <div class="explication-texte">
           ${q.explication}
         </div>
-        <button class="btn-suivant" onclick="questionSuivante()">
+        <button class="btn-suivant" onclick="SY_questionSuivante()">
           ${questionActuelle + 1 < QUESTIONS.length ? 'Question suivante →' : 'Voir le résultat ✦'}
         </button>
       </div>
@@ -2802,7 +2810,7 @@ function afficherFin() {
       <p>Une thérapie individuelle peut être un espace précieux pour explorer ces questions à votre propre rythme. Des groupes de parole sont également disponibles pour celles et ceux qui souhaitent partager leur expérience avec d'autres personnes concernées.</p>
     </div>
     <div class="btns-fin" style="margin-top:1.5rem;">
-      <button class="btn-fin primaire" onclick="recommencer()">Recommencer</button>
+      <button class="btn-fin primaire" onclick="SY_recommencer()">Recommencer</button>
     </div>
   `;
 
@@ -2828,6 +2836,10 @@ function recommencer() {
 }
 
 
+  window.SY_demarrerJeu = demarrerJeu;
+  window.SY_repondre = repondre;
+  window.SY_questionSuivante = questionSuivante;
+  window.SY_recommencer = recommencer;
   return { init: function() { afficherIntro(); } };
 })();
 
