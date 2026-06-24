@@ -2209,6 +2209,8 @@ afficherIntro();
 </div>
 <script>
 
+var _outilCourant = null;
+
 window.afficherOutil = function(outil) {
   var f = document.getElementById('outil-fleches');
   var s = document.getElementById('outil-synonymes');
@@ -2221,16 +2223,30 @@ window.afficherOutil = function(outil) {
     s.style.display = 'none';
     btnF.style.cssText = actif;
     btnS.style.cssText = inactif;
+    if (_outilCourant !== 'fleches' && window.JeuFleches) {
+      window.JeuFleches.init();
+    }
   } else {
     f.style.display = 'none';
     s.style.display = 'block';
     btnS.style.cssText = actif;
     btnF.style.cssText = inactif;
+    if (_outilCourant !== 'synonymes' && window.JeuSynonymes) {
+      window.JeuSynonymes.init();
+    }
   }
+  _outilCourant = outil;
 };
 
+// Init au chargement de la page outils
+document.addEventListener('DOMContentLoaded', function() {
+  if (document.getElementById('page-outils')) {
+    window.afficherOutil('fleches');
+  }
+});
 
-(function() {
+
+window.JeuFleches = (function() {
 const THEMATIQUES = [
   {
     titre: "Les actes de violence directe",
@@ -2553,14 +2569,14 @@ function thematiqueSuivante() {
   }
 }
 
-// Init
-afficherIntro();
-// Exposer init pour réinitialisation
-window._initFleches = function() { afficherIntro(); };
+
+  return {
+    init: function() { afficherIntro(); }
+  };
 })();
 
 
-(function() {
+window.JeuSynonymes = (function() {
 const QUESTIONS = [
   {
     motA: "Crier",
@@ -2829,11 +2845,14 @@ function recommencer() {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-// Init
-afficherIntro();
-window._initSynonymes = function() { afficherIntro(); };
+
+  return {
+    init: function() { afficherIntro(); }
+  };
 })();
 
+// Init premier jeu
+if (window.JeuFleches) window.JeuFleches.init();
 </script>
 </div>
 <!-- FIN PAGE OUTILS -->
