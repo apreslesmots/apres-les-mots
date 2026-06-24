@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://apres-les-mots.vercel.app/sitemap.xml
