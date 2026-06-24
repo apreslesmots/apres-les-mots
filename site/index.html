@@ -1564,22 +1564,22 @@ footer{background:#1a1625;padding:2.5rem 4rem;display:flex;align-items:center;ju
   </div>
 </section>
 <div id="outil-fleches" style="display:block;">
-<div class="nav-thematiques" id="nav-thematiques" style="display:none">
+<div class="nav-thematiques" id="fl-nav-thematiques" style="display:none">
   <button class="btn-thematique actif" onclick="chargerThematique(0)">Violence directe</button>
   <button class="btn-thematique" onclick="chargerThematique(1)">Manipulation</button>
   <button class="btn-thematique" onclick="chargerThematique(2)">Défaillance parentale</button>
 </div>
 
 <div class="conteneur">
-  <div class="titre-thematique" id="titre-thematique" style="display:none">
-    <div class="numero" id="num-thematique">Thématique 1 sur 3</div>
-    <h2 id="nom-thematique">Les actes de violence directe</h2>
+  <div class="titre-thematique" id="fl-titre-thematique" style="display:none">
+    <div class="numero" id="fl-num-thematique">Thématique 1 sur 3</div>
+    <h2 id="fl-nom-thematique">Les actes de violence directe</h2>
   </div>
 
-  <div class="progression" id="progression"></div>
+  <div class="progression" id="fl-progression"></div>
 
-  <div id="zone-jeu"></div>
-  <div class="message-fin" id="message-fin">
+  <div id="fl-zone-jeu"></div>
+  <div class="message-fin" id="fl-message-fin">
     <div class="emoji">✦</div>
     <h3>Thématique terminée</h3>
     <p>Vous avez exploré tous les mots de cette thématique. Chaque mot reconnu est un pas vers la compréhension de ce qui a pu se passer.</p>
@@ -1591,7 +1591,7 @@ footer{background:#1a1625;padding:2.5rem 4rem;display:flex;align-items:center;ju
     </div>
     <div style="margin-top:1.5rem;">
       <button class="btn-recommencer" onclick="recommencer()">Recommencer</button>
-      <button class="btn-suivant" id="btn-suivant" onclick="thematiqueSuivante()">Thématique suivante →</button>
+      <button class="btn-suivant" id="fl-btn-suivant" onclick="thematiqueSuivante()">Thématique suivante →</button>
     </div>
   </div>
 </div>
@@ -1766,14 +1766,14 @@ function afficherMotActuel() {
       </div>
       <div class="cases-mot">${cases}</div>
       <div class="zone-saisie">
-        <input type="text" class="input-mot" id="input-reponse"
+        <input type="text" class="input-mot" id="fl-input-reponse"
           placeholder="Votre réponse…"
           autocomplete="off" autocorrect="off" spellcheck="false"
           onkeydown="if(event.key==='Enter') valider()">
         <button class="btn-valider" onclick="valider()">Valider</button>
       </div>
       <div style="margin-top:0.6rem;">
-        <button class="btn-indice" id="btn-indice" onclick="afficherIndice()">Je donne ma langue au chat</button>
+        <button class="btn-indice" id="fl-btn-indice" onclick="afficherIndice()">Je donne ma langue au chat</button>
       </div>
     </div>
   `;
@@ -1925,13 +1925,13 @@ afficherIntro();
 </div>
 <div id="outil-synonymes" style="display:none;">
 <div class="barre-progression">
-  <div class="dots-progression" id="dots-progression"></div>
-  <div class="compteur" id="compteur">1 / 9</div>
+  <div class="dots-progression" id="sy-dots-progression"></div>
+  <div class="compteur" id="sy-compteur">1 / 9</div>
 </div>
 
 <div class="conteneur">
-  <div id="zone-jeu"></div>
-  <div class="ecran-fin" id="ecran-fin"></div>
+  <div id="sy-zone-jeu"></div>
+  <div class="ecran-fin" id="sy-ecran-fin"></div>
 </div>
 
 <script>
@@ -2210,7 +2210,6 @@ afficherIntro();
 <script>
 
 var _outilCourant = null;
-
 window.afficherOutil = function(outil) {
   var f = document.getElementById('outil-fleches');
   var s = document.getElementById('outil-synonymes');
@@ -2219,31 +2218,16 @@ window.afficherOutil = function(outil) {
   var actif = 'font-family:DM Sans,sans-serif;font-size:0.9rem;font-weight:500;padding:0.7rem 1.6rem;border-radius:2rem;border:2px solid #7c6aaa;background:#7c6aaa;color:white;cursor:pointer;margin:0.3rem;transition:all 0.2s;';
   var inactif = 'font-family:DM Sans,sans-serif;font-size:0.9rem;font-weight:500;padding:0.7rem 1.6rem;border-radius:2rem;border:2px solid #e8e3f0;background:white;color:#7c6aaa;cursor:pointer;margin:0.3rem;transition:all 0.2s;';
   if (outil === 'fleches') {
-    f.style.display = 'block';
-    s.style.display = 'none';
-    btnF.style.cssText = actif;
-    btnS.style.cssText = inactif;
-    if (_outilCourant !== 'fleches' && window.JeuFleches) {
-      window.JeuFleches.init();
-    }
+    f.style.display = 'block'; s.style.display = 'none';
+    btnF.style.cssText = actif; btnS.style.cssText = inactif;
+    if (_outilCourant !== 'fleches' && window.JeuFleches) window.JeuFleches.init();
   } else {
-    f.style.display = 'none';
-    s.style.display = 'block';
-    btnS.style.cssText = actif;
-    btnF.style.cssText = inactif;
-    if (_outilCourant !== 'synonymes' && window.JeuSynonymes) {
-      window.JeuSynonymes.init();
-    }
+    f.style.display = 'none'; s.style.display = 'block';
+    btnS.style.cssText = actif; btnF.style.cssText = inactif;
+    if (_outilCourant !== 'synonymes' && window.JeuSynonymes) window.JeuSynonymes.init();
   }
   _outilCourant = outil;
 };
-
-// Init au chargement de la page outils
-document.addEventListener('DOMContentLoaded', function() {
-  if (document.getElementById('page-outils')) {
-    window.afficherOutil('fleches');
-  }
-});
 
 
 window.JeuFleches = (function() {
@@ -2331,7 +2315,7 @@ let etats = [];
 let clicsIndice = 0;
 
 function afficherIntro() {
-  document.getElementById('zone-jeu').innerHTML = `
+  document.getElementById('fl-zone-jeu').innerHTML = `
     <div class="ecran-intro">
       <div class="label-intro">Avant de commencer</div>
       <p>Être en relation — être parent, frère, sœur, enfant, partenaire — c'est difficile. Ça amène des maladresses, des quiproquos, des moments de frustration. Crier une fois, dénigrer dans un moment de fatigue, mal réagir : ça arrive, à tout le monde.</p>
@@ -2343,8 +2327,8 @@ function afficherIntro() {
 }
 
 function demarrerJeu() {
-  document.getElementById('nav-thematiques').style.display = 'flex';
-  document.getElementById('titre-thematique').style.display = 'block';
+  document.getElementById('fl-nav-thematiques').style.display = 'flex';
+  document.getElementById('fl-titre-thematique').style.display = 'block';
   chargerThematique(0);
 }
 
@@ -2367,11 +2351,11 @@ function chargerThematique(index) {
   });
 
   const t = THEMATIQUES[index];
-  document.getElementById('num-thematique').textContent = `Thématique ${index + 1} sur 3`;
-  document.getElementById('nom-thematique').textContent = t.titre;
+  document.getElementById('fl-num-thematique').textContent = `Thématique ${index + 1} sur 3`;
+  document.getElementById('fl-nom-thematique').textContent = t.titre;
 
-  document.getElementById('message-fin').style.display = 'none';
-  document.getElementById('btn-suivant').style.display = index < 2 ? 'inline-block' : 'none';
+  document.getElementById('fl-message-fin').style.display = 'none';
+  document.getElementById('fl-btn-suivant').style.display = index < 2 ? 'inline-block' : 'none';
 
   mettreAJourProgression();
   afficherMotActuel();
@@ -2379,7 +2363,7 @@ function chargerThematique(index) {
 
 function mettreAJourProgression() {
   const mots = THEMATIQUES[thematiqueActuelle].mots;
-  const prog = document.getElementById('progression');
+  const prog = document.getElementById('fl-progression');
   prog.innerHTML = mots.map((_, i) => {
     let classe = 'dot-progression';
     if (etats[i] === 'trouve') classe += ' trouve';
@@ -2391,9 +2375,9 @@ function mettreAJourProgression() {
 function afficherMotActuel() {
   const mots = THEMATIQUES[thematiqueActuelle].mots;
   if (motActuel >= mots.length) {
-    document.getElementById('zone-jeu').innerHTML = '';
-    document.getElementById('message-fin').style.display = 'block';
-    document.getElementById('progression').innerHTML = mots.map(() =>
+    document.getElementById('fl-zone-jeu').innerHTML = '';
+    document.getElementById('fl-message-fin').style.display = 'block';
+    document.getElementById('fl-progression').innerHTML = mots.map(() =>
       `<div class="dot-progression trouve"></div>`).join('');
     return;
   }
@@ -2408,7 +2392,7 @@ function afficherMotActuel() {
     return `<div class="case-lettre" id="case-${i}"></div>`;
   }).join('');
 
-  document.getElementById('zone-jeu').innerHTML = `
+  document.getElementById('fl-zone-jeu').innerHTML = `
     <div class="carte-mot" id="carte-${motActuel}">
       <div class="entete-carte">
         <div class="numero-mot">${motActuel + 1}.</div>
@@ -2429,7 +2413,7 @@ function afficherMotActuel() {
   `;
 
   setTimeout(() => {
-    const inp = document.getElementById('input-reponse');
+    const inp = document.getElementById('fl-input-reponse');
     if (inp) inp.focus();
   }, 100);
 }
@@ -2437,7 +2421,7 @@ function afficherMotActuel() {
 function valider() {
   const mots = THEMATIQUES[thematiqueActuelle].mots;
   const m = mots[motActuel];
-  const input = document.getElementById('input-reponse');
+  const input = document.getElementById('fl-input-reponse');
   if (!input) return;
 
   const reponse = normaliser(input.value);
@@ -2499,7 +2483,7 @@ function afficherIndice() {
   const mots = THEMATIQUES[thematiqueActuelle].mots;
   const m = mots[motActuel];
   const lettres = [...m.mot.replace(/[^A-ZÀÂÄÉÈÊËÎÏÔÙÛÜŸŒÆ]/gi, '')];
-  const btnIndice = document.getElementById('btn-indice');
+  const btnIndice = document.getElementById('fl-btn-indice');
 
   if (clicsIndice === 0) {
     // 1er clic : révèle 1 lettre sur 2 parmi les lettres restantes (index impairs)
@@ -2546,7 +2530,7 @@ function afficherIndice() {
     return;
   }
 
-  const input = document.getElementById('input-reponse');
+  const input = document.getElementById('fl-input-reponse');
   if (input) input.focus();
 }
 
@@ -2570,9 +2554,7 @@ function thematiqueSuivante() {
 }
 
 
-  return {
-    init: function() { afficherIntro(); }
-  };
+  return { init: function() { afficherIntro(); } };
 })();
 
 
@@ -2669,7 +2651,7 @@ let aRepondu = false;
 let introVue = false;
 
 function afficherIntro() {
-  document.getElementById('zone-jeu').innerHTML = `
+  document.getElementById('sy-zone-jeu').innerHTML = `
     <div class="ecran-intro">
       <div class="label-intro">Avant de commencer</div>
       <p>Être en relation — être parent, frère, sœur, enfant, partenaire — c'est difficile. Ça amène des maladresses, des quiproquos, des moments de frustration. Crier une fois, dénigrer dans un moment de fatigue, mal réagir : ça arrive, à tout le monde.</p>
@@ -2681,7 +2663,7 @@ function afficherIntro() {
 }
 
 function mettreAJourProgression() {
-  const dots = document.getElementById('dots-progression');
+  const dots = document.getElementById('sy-dots-progression');
   dots.innerHTML = QUESTIONS.map((_, i) => {
     let classe = 'dot';
     if (i < resultats.length) {
@@ -2692,7 +2674,7 @@ function mettreAJourProgression() {
     return `<div class="${classe}"></div>`;
   }).join('');
 
-  document.getElementById('compteur').textContent = `${questionActuelle + 1} / ${QUESTIONS.length}`;
+  document.getElementById('sy-compteur').textContent = `${questionActuelle + 1} / ${QUESTIONS.length}`;
 }
 
 function afficherQuestion() {
@@ -2705,7 +2687,7 @@ function afficherQuestion() {
   const q = QUESTIONS[questionActuelle];
   mettreAJourProgression();
 
-  document.getElementById('zone-jeu').innerHTML = `
+  document.getElementById('sy-zone-jeu').innerHTML = `
     <div class="carte" id="carte-actuelle">
       <div class="mots-en-jeu">
         <span class="mot-tag">${q.motA}</span>
@@ -2784,7 +2766,7 @@ function questionSuivante() {
 }
 
 function afficherFin() {
-  document.getElementById('zone-jeu').innerHTML = '';
+  document.getElementById('sy-zone-jeu').innerHTML = '';
   const nbCorrects = resultats.filter(Boolean).length;
   const total = QUESTIONS.length;
 
@@ -2804,7 +2786,7 @@ function afficherFin() {
     sousTitre = "Ces distinctions sont subtiles et souvent contre-intuitives — c'est précisément pour ça qu'elles méritent qu'on s'y attarde.";
   }
 
-  const ecranFin = document.getElementById('ecran-fin');
+  const ecranFin = document.getElementById('sy-ecran-fin');
   ecranFin.style.display = 'block';
   ecranFin.innerHTML = `
     <div class="score-visuel">${scoreDots}</div>
@@ -2824,10 +2806,10 @@ function afficherFin() {
     </div>
   `;
 
-  document.getElementById('dots-progression').innerHTML = resultats.map(r =>
+  document.getElementById('sy-dots-progression').innerHTML = resultats.map(r =>
     `<div class="dot ${r ? 'repondu-vrai' : 'repondu-faux'}"></div>`
   ).join('');
-  document.getElementById('compteur').textContent = `${total} / ${total}`;
+  document.getElementById('sy-compteur').textContent = `${total} / ${total}`;
 }
 
 function demarrerJeu() {
@@ -2840,18 +2822,15 @@ function recommencer() {
   questionActuelle = 0;
   resultats = [];
   aRepondu = false;
-  document.getElementById('ecran-fin').style.display = 'none';
+  document.getElementById('sy-ecran-fin').style.display = 'none';
   afficherIntro();
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 
-  return {
-    init: function() { afficherIntro(); }
-  };
+  return { init: function() { afficherIntro(); } };
 })();
 
-// Init premier jeu
 if (window.JeuFleches) window.JeuFleches.init();
 </script>
 </div>
